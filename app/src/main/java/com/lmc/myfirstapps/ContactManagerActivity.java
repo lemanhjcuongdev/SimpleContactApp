@@ -21,6 +21,7 @@ public class ContactManagerActivity extends AppCompatActivity {
     ArrayList<Contact> lstContact = new ArrayList<>();
     ListView lvContact;
     ContactAdapter contactAdapter;
+    ContactDBHelper contactDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +29,10 @@ public class ContactManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_manager);
         btnAddContact = findViewById(R.id.btnAddContact);
         lvContact = findViewById(R.id.lvContact);
-        contactAdapter = new ContactAdapter(ContactManagerActivity.this,lstContact);
-        //thiết lập adapter cho listview
-        lvContact.setAdapter(contactAdapter);
+//        contactAdapter = new ContactAdapter(ContactManagerActivity.this,lstContact);
+//        //thiết lập adapter cho listview
+//        lvContact.setAdapter(contactAdapter);
+        getListContact();
         btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +44,14 @@ public class ContactManagerActivity extends AppCompatActivity {
         });
     }
 
+    private void getListContact(){
+        contactDBHelper = new ContactDBHelper(ContactManagerActivity.this);
+        lstContact = contactDBHelper.getAllContact();
+        contactAdapter = new ContactAdapter(ContactManagerActivity.this,lstContact);
+        //set adapter cho listview
+        lvContact.setAdapter(contactAdapter);
+    }
+
     //khởi tạo 1 biến ActivityResult
 
     @Override
@@ -50,10 +60,16 @@ public class ContactManagerActivity extends AppCompatActivity {
             if(resultCode==RESULT_OK){
                 String contactName = data.getStringExtra("name");
                 String contactPhone = data.getStringExtra("phone");
-                //Thêm đối tượng Contact vào arrayList
-                lstContact.add(new Contact(contactName,contactPhone));
+                //Thêm đối tượn
+                // g Contact vào arrayList
+//                lstContact.add(new Contact(contactName,contactPhone));
+                //khởi tạo đối tượng contact db helper
+                contactDBHelper = new ContactDBHelper(ContactManagerActivity.this);
+                //goi pthuc insert contact
+                contactDBHelper.insertContact(new Contact(contactName,contactPhone));
                 //cập nhật dữ liệu trên listview nếu thêm 1 item mới
-                contactAdapter.notifyDataSetChanged();
+//                contactAdapter.notifyDataSetChanged();
+                getListContact();
 //                Toast.makeText(this,contactName+contactPhone,Toast.LENGTH_LONG).show();
             }
         }else
