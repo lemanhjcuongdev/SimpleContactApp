@@ -60,7 +60,7 @@ public class ContactDBHelper extends SQLiteOpenHelper {
         contentUpdate.put(PHONE,contact.getPhoneNum());
         //lay ra sqlitedb de thuc hien ghi du lieu
         SQLiteDatabase db = getWritableDatabase();
-        int result = db.update(TB_NAME,contentUpdate,NAME+"LIKE % ?",new String []{name});
+        int result = db.update(TB_NAME,contentUpdate,NAME+" = ?",new String []{name});
         if (result>0)
             Toast.makeText(context, "Update Successfully!", Toast.LENGTH_SHORT).show();
         else Toast.makeText(context, "Update Failed!", Toast.LENGTH_SHORT).show();
