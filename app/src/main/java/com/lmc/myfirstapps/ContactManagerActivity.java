@@ -67,6 +67,7 @@ public class ContactManagerActivity extends AppCompatActivity {
 
         int i = info.position;
         String name = lstContact.get(i).getContactName();
+
         switch (item.getItemId()){
             case R.id.detail_option:
                 Toast.makeText(this, "Chi tiet", Toast.LENGTH_SHORT).show();
@@ -98,12 +99,12 @@ public class ContactManagerActivity extends AppCompatActivity {
                     }
                 });
 
-                Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.del_option:
                 contactDBHelper.delContact(name);
                 getListContact();
-                Toast.makeText(this, "xoa", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "xoa", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onContextItemSelected(item);
